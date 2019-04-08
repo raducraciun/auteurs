@@ -1,0 +1,23 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 2cm, paperwidth = 21cm, paperheight = 29.7cm]{geometry}
+\usepackage{graphicx}
+
+\begin{document}
+\title{Idées à mettre sur le rapport}
+\maketitle
+
+\begin{itemize}
+\item Les rsx de neurones sont un modèle de calcul qui partage certaines propriétés avec le cerveau animal : nbses unités simples travailles en parallèle et de manière décentralisée (à véifier). Le poids des connexions entre ces unités sont le principal moyen de stockage de l'information à long terme dans les rsx de neurones. La mise à jour de ces poids est la principale façon dont le réseau de neurones apprend de nouvelles informations.
+
+\item Le chapitre précédent faisait référence à des équations de modélisation matricielles telles que $Ax = b$. Dans le contexte des réseaux de neurones, la matrice $A$ correspond toujours aux données d'entrée, le vecteur $b$ correspond aux étiquettes ou aux résultats pour chaque ligne (i.e. chaque observation) de $A$, et le vecteur $x$ contient les poids sur les connexions du réseau neuronal.
+
+\item Les biais sont des valeurs scalaires ajoutées à l'entrée pour garantir l'activation d'au moins quelques neurones par couche, quelle que soit la force du signal. Ils permettent à l'apprentissage de se déclencher, même dans le cas d'un signal faible. Les biais permettent également au réseau d'essayer de nouvelles interprétations ou de nouveaux comportements. Tout comme les poids, ils sont modifiés lors de la phase d'apprentissage.
+
+\item Selon la configuration du réseau, la sortie peut être à valeur réelle (une régression) ou bien un ensemble de probabilités (une classifiation). Ce comportement est contrôlé par le type de fonction d'activation utilisée dans la couche de sortie  (typiquement softmax ou sigmoïde pour la classification).
+
+\item Un réseau bien entraîné a des poids qui amplifient le signal et qui atténuent le bruit. Un poids élevé signifie une corrélation plus étroite entre un signal et la sortie produite.
+\end{itemize}
+
+\end{document}

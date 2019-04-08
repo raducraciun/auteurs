@@ -1,0 +1,31 @@
+Pour l'heure, les technologies liées à l'Intelligence Artificielle et à l'apprentissage automatique ne sont que peu connues du grand public, contrairement à des outils tels que la messagerie chifrée par exemple.
+
+On peut distinguer au moins trois approches à l'apprentissage automatique et à ses utilisations : du point de vue du chercheur, c'est une théorie solide et complexe, fondée sur des mathématiques de haut niveau; du point de vue de l'étudiant en école d'ingénieurs, il s'agit de globalement de statistiques appliquées à de grands volumes de données et par de nombreuses unités de calcul; pour le profane, c'est simplement de la magie. 
+
+Comment peut-on envisager qu'une machine puisse reconnaître des visages, ou mieux encore, en générer, alors que personne ne lui a explicitement inculqué le concept de visage ? Est-il possible qu'un jour nous n'ayons plus d'emploi à cause de l'intelligence artificielle ?
+
+Nous adopterons ici le point de vue de l'étudiant
+
+\chapter{Panorama de l'apprentissage artificiel}
+
+\section{Régression versus classification}
+
+La frontière entre ces deux méthodes est parfois floue, car 
+\subsection{Régression}
+
+La régression se caractérise par deux aspects : les entrées de la méthode sont des valeurs numériques continues et la sortie est une autre variable continue. L'idée est contenue dans le nom, c'est-à-dire qu'à partir des divers mesures effectuées, on tente de tout résumer pour en déduire une autre valeur.
+
+Un exemple typique est celui d'une maison dont on cherche à estimer le prix. Si on considère uniquement sa surface habitable, on pourra éventuellement en prédire le prix, mais il faut s'attendre à se tromper assez lourdement sur le prix auquel. En revanche, si l'on prend en considération l'âge,la durée depuis la mise en vente, l'éfficacité thermique, le prix moyen des maisons environnantes, on peut avoir une meilleure idée du prix.
+
+Pour prédire un tel prix, il suffit de construire un modèle, de le tester sur un grand jeu de données réelles puis de l'ajuster. Une difficulté est que, selon le modèle qu'on prend, ses paramètres ne sont pas forcément uniques. On peut donc être amené à tester un grand nombre de paramètres mais aussi un grand nombre de modèles si l'on souhaite ouvrir son agence immobilière et fixer des prix.
+
+Le modèle de régression le plus connu est la \emph{régression linéaire}. Ses hypothèses sont simples : la variable prédite   est une combinaison linéaire des variables d'entrées .
+Dans le cas de notre exemple, si nous appelons $y$ le prix de la maison, $x_i$ les variables d'entrée et $\alpha_i$ les paramètres du modèle, alors la prédiction s'écrit :
+$$y = \alpha_0 + \sum_{i = 1}^{i = n}{\alpha_i x_i}$$
+
+Bien sûr, on peut imaginer des modèles non liéaires, dans lesquels $y$ est une fonction non linéaire des $x_i$. Cependant, le calcul des paramètres en dépendra très fortement, et il n'y a pas nécessairement de métode existante pour ce faire. Le choix du modèle se fait par souci de généralisation, c'est-à-dire qu'un modèle sera privilégié s'il permet de prédire des prix réalistes au-delà du seul jeu de données sur lequel il a été construit.
+
+Enfin, il est possible de faire une régression sur des variables discrètes, mais il faut au préalable les "numériser", c'est-à-dire 
+
+\subsection{Classification} 
+Contrairement à la régression, la classification prédit une variable discrète
