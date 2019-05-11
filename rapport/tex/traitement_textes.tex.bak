@@ -1,0 +1,20 @@
+\chapter{Traitement du Langage Naturel}
+
+Après avoir décrit les principes de l'apprentissage par un réseau de neurones, voyons comment on peut les mettre en oeuvre. On se restreint à des problèmes impliquant du texte, et plus précisément les problèmes de traitement automatisé du langage naturel. Explorons deux aspects complémentaires de l'apprentissage automatisé, que sont la classification et la génération de textes; ces problèmes se retrouvent le plus souvent en lumière avec le traitement d'images.
+
+\section{Les données}
+Nous avons souhaité découvrir les possibilités offertes par l'apprentissage profond pour des données textuelles. Pour ce faire, nous avons construit un corpus de plus de 150 romans de la littérature française classique, dont les auteurs sont Balzac, Dumas, Hugo et Zola. Bien évidemment, d'autres auteurs sont envisageables, mais ceux-ci ont l'avantage d'avoir été prolixes : plus de 80 romans pour Balzac, plus de 50 pour Zola; Hugo et Dumas en ont écrit moins, mais très longs.
+
+Nous avons utilisé des ressources libres pour récupérer les fichiers texte, à savoir gutenberg.org ainsi que wikimedia.org. Ces sites internet reproduisent de très nombreuses oeuvres de manière numérique. Toutefois, il a fallu extraire chaque texte à la main, car, sur le premier site, toute navigation automatisée est interdite, alors que le second site n'a pas une structure suffisamment régulière d'un livre à l'autre pour le faire autrement. Tous les textes ainsi copiés sont ensuite regroupés par auteur dans un répertoire "textes_bruts".
+
+Pour les tâches d'apprentissage, on suppose que chaque auteur écrit dans un style qui lui est propre, reconnaissable par une machine. Le but secondaire de ce projet a été de vérifier cette hypothèse, sachant que le but principal est de découvrir l'apprentissage profond. Mais en parcourant les romans écrits par chacun des auteurs cités, on remarque des cas atypiques. Le plus flagrant est "Han d'Islande", écrit par Victor Hugo. Ce roman regorge de mots et de phrases en islandais. Bien sûr, pour le lecteur, tout est traduit en note de bas de page ou entre parenthèses. Cependant, il serait mal venu d'utiliser ce (long) texte pour un algorithme cherchant à reconnaître un auteur. D'une part, enlever toutes les annotations serait à faire manuellement. D'autre part, le corpus se compose d'auteurs classiques français. Pour peu qu'on cherche à construire une représentation sémantique des mots du corpus, on trouverait tout à coup des termes étrangers synonymes de termes français; tyique une erreur de surinterprétation. Dans une moindre mesure, nous avons ôté toutes les annotations, remarques et certaines parenthèses des textes. Les explications directes de l'auteur rompent le fil narratif de l'oeuvre, en plus d'introduire des caractères é(comme 
+
+Les deux tâches d'apprentissage utilisent les textes différemment. Pour la génération de texte, il suffit de prendre un texte suffisament long
+Pour utiliser ces textes dans une tâche d'apprentissage, il faut les découper. Leurs tailles initiales varient entre 20 Ko et 3 Mo, ce qui est très déséquilibré. On emploie alors un script python pour découper les textes en morceaux de 300 mots environ. Ce script se charge aussi de labelliser chacun des morceaux de texte avec le nom de son auteur. Les  Voici un exemple de l'en-tête d'un morceau de texte.
+
+Cependant, on ne peut pas utiliser les textes 
+
+\section{Classification de textes}
+
+\section{Génération de texte}
+
