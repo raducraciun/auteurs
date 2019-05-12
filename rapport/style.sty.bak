@@ -1,0 +1,16 @@
+\ProvidesPackage{style}
+
+\usepackage[margin = 2cm]{geometry}
+\usepackage[english, french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{letltxmacro}
+\LetLtxMacro{\oldemph}{\emph}
+\renewcommand{\emph}[1]{\textcolor{blue}{\textbf{\oldemph{#1}}}}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\numberwithin{equation}{chapter}
+\usepackage{algpseudocode}
+\usepackage[chapter]{algorithm}

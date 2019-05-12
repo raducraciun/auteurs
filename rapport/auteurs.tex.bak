@@ -1,0 +1,27 @@
+\documentclass[11pt, a4paper, twoside, openright]{report}
+
+\usepackage{style}
+
+\begin{document}
+\title{Découverte de l'Apprentissage Profond\\ Application au Traitement du Langage Naturel}
+\author{Radu CRACIUN}
+\date{Mai 2019}
+\maketitle
+
+\include{./tex/epigraphe}
+
+\tableofcontents
+
+\include{./tex/introduction}
+
+\include{./tex/panorama}
+
+\include{./tex/ent_test_valid}
+
+%\include{./tex/archi_reseaux}
+
+\include{./tex/tln}
+
+\include{./tex/conclusion}
+
+\end{document}
