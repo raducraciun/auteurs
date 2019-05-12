@@ -1,56 +1,90 @@
-\chapter{Entraînement et évaluation d'un réseau de neurones}
+\chapter{Entraînement et évaluation d'un réseau de neurones}\label{ch:ent_test_valid}
+
+Dans ce chapitre, nous traiterons des moyens généraux d'entraîner un réseau de neurones de manière supervisée, ainsi que des méthodes de l'évaluer en vue de l'améliorer.
 
 \section{Entraînement}
-
-L'\emph{entraînement} d'un réseau de neurones, que nous désignerons par "NN" par la suite, est une phase durant laquelle on force le réseau à changer les poids et biais de ses neurones pour produire la sortie voulue pour des exemples connus (il s'agit donc d'apprentissage supervisé); on espère ainsi que le réseau sera capable de produire la bonne sortie pour des instances encore inconnues, c'est-à-dire bien généraliser.
+L'\emph{entraînement} d'un réseau de neurones, est une phase durant laquelle on force le réseau à changer les poids et biais de ses neurones pour produire la sortie voulue pour des exemples connus; on espère ainsi que le réseau sera capable de produire la bonne sortie pour des instances encore inconnues, c'est-à-dire bien généraliser.
 
 \subsection{Fonction objectif}
-Une manière classique de suivre l'évolution du système qui apprend est de calculer un indicateur de sa performance. En l'occurrence, il s'agit d'évaluer sa performance sur le jeu de données qui lui est soumis lors de la phase d'entraînement. Le moyen le plus répandu est de calculer cet indicateur sur chacune des instances d'entraînement $x_i$ et d'en prendre la moyenne sur l'ensemble des $m$ instances. On appelle cet indicateur \emph{fonction de coût}, \emph{fonction de perte} ou encore \emph{fonction objectif} (\emph{cost function} ou \emph{loss function} en anglais). Pour un réseau de neurones, on définit souvent une des fonctions de coût suivantes :
+Une manière classique de suivre l'évolution du système qui apprend est de calculer un indicateur de sa performance. En l'occurrence, il s'agit d'évaluer sa performance sur le jeu de données qui lui est soumis lors de la phase d'entraînement. Le moyen le plus répandu est de calculer cet indicateur sur chacune des instances d'entraînement \(x_i\) et d'en prendre la moyenne sur l'ensemble des \(m\) instances. On appelle cet indicateur \emph{fonction de coût}, \emph{fonction de perte} ou encore \emph{fonction objectif} (\emph{cost function} ou \emph{loss function} en anglais). Pour un réseau de neurones, on définit souvent une des fonctions de coût suivantes :
 
-\begin{tabular}{l|l}
-\vline erreur quadratique moyenne & 
-\end{tabular}
-
-, à savoir $(y - \hat{y})^2$, où $y$ est la réponse attendue et $\hat{y}$ est la réponse inférée par le réseau.
+\begin{align}
+\kappa &= \frac{1}{m}\sum_{i = 1}^m (y_i - \hat{y}_i)^2\\
+\kappa &= - \frac{1}{m}\sum_{i = 1}^m y_i \ln{\hat{y}_i} + (1 - y_i)\ln{(1 - \hat{y}_i)}
+\end{align}
+où : \(m\) est le nombre d'observations ; les \(y_i\) sont les réponses attendues et \(\hat{y}_i\) sont les réponses inférées par le réseau.
 
 Maximiser la performance du réseau est équivalent à minimiser la fonction de coût, mais le formuler ainsi permet de profiter des techniques d'optimisation déjà existantes. On en traite dans la section suivante.
 
-La dépendance entre la fonction de coût et les réponses $y$ et $\hat{y}$ est implicite. En effet, on ne peut pas les modifier directement. D'une part, $y$ n'est pas un paramètre du modèle mais une caractéristique des données, et d'autre part, $\hat{y}$ est issu d'un calcul complexe effectué à partir des données d'entrée ainsi que des poids et biais du réseau de neurones. Il serait donc plus judicieux d'expliciter la relation entre paramètres du modèle et la sortie qu'il produit : $\kappa((\theta_i), (b_j)) = (y - \hat{y})^2$. Cette représentation est utile pour l'algorithme qui suit.
+La dépendance entre la fonction de coût et les réponses \(y_i\) et \(\hat{y}_i\) est implicite. En effet, on ne peut pas les modifier directement. D'une part, $y$ n'est pas un paramètre du modèle mais une caractéristique des données, et d'autre part, $\hat{y}$ est issu d'un calcul complexe effectué à partir des données d'entrée ainsi que des poids et biais du réseau de neurones. Il serait donc plus judicieux d'expliciter la relation entre paramètres du modèle, les valeurs d'entrée et la sortie qu'il produit : 
+\[ \kappa = \kappa(\boldsymbol{w}, \boldsymbol{b}, \boldsymbol{x}, \boldsymbol{y})\]
+\[ \kappa = \kappa((\dotsc, w_i, \dotsc), (\dotsc, b_i, \dotsc), (\dotsc, x_i, \dotsc), (\dotsc, y_i, \dotsc))\]
+où les variables sont les regroupements des poids (respectivement des biais, entrées et réponses attendues) sous forme de vecteurs.
+Cette représentation est utile pour l'algorithme qui suit.
 
 [CORRIGER]
 
 [FINIR]
 
-\subsection{Descente de gradient}
+\subsection{Descente de gradient}\label{subseq:desc_grad}
 La \emph{descente de gradient} est une méthode d'optimisation très générale. Elle permet de minimiser une fonction, donc de maximiser son opposé, par étapes successives. Un point caractéristique de la méthode est qu'elle ne garantit, à condition que la fonction soit bien choisie, que la découverte d'un extremum local. De manière générale, la découverte du extremum global d'une fonction continue, s'il existe, est un problème difficile.
 
 Bien évidemment, puisqu'il s'agit de minimiser la fonction de coût, ses proprietés vont grandement influer sur le déroulement de l'algorithme. Le cas le plus intéressant est celui d'une fonction convexe [DEFINIR], ce qui nous assurerait que la fonction possède au plus un minimum. Si ce n'était pas le cas, la descente de gradient pourrait s'arrêter dans un minimum local loin de l'optimum global. Mais il n'est pas toujours évident de garantir cette propriété, encore moins en dimension 2 ou supérieure.
 
 L'idée de l'algorithme de la descente de gradient est qu'à chaque itération on ajuste les paramètres de la fonction de coût, de sorte que les nouvelles valeurs renvoient une sortie plus faible qu'à l'itération précédente. On choisit de s'arrêter lorsque les variations inter-étapes sont plus faibles qu'un seuil choisi, ou lorsqu'on a effectué un certain nombre d'itérations. 
 
-Nous avons évoqué les fonctions convexes, mais une condition nécessaire est en fait la différentiabilité de la fonction de coût. Lorsque c'est le cas, on peut associer un gradient à chaque point de cette fonction. Le gradient est un vecteur dont le sens indique la plus forte pente au voisinage du point où il est calculé. Ses coordonnées, en même nombre que les arguments de la fonction de coût, donnent directement la marche à suivre : leur signe indique comment faire varier les paramètres, et leur valeur indique de combien les changer.  $\nabla \kappa = \vec{un truc} $
+Nous avons évoqué les fonctions convexes, mais une condition nécessaire est en fait la différentiabilité de la fonction de coût. Lorsque c'est le cas, on peut associer un gradient à chaque point de cette fonction. Le gradient est un vecteur dont le sens indique la plus forte pente au voisinage du point où il est calculé. Ses coordonnées, en même nombre que les arguments de la fonction de coût, donnent directement la marche à suivre : leur signe indique comment faire varier les paramètres, et leur valeur indique de combien les changer.  
 
-En une dimension, cela pourrait se représenter comme suit : [SCHEMA]
+L'algorithme, incroyablement simple, est le suivant :
 
-Avec trois paramètres, on pourrait l'imaginer comme ceci : [SCHEMA]
+\begin{algorithm}
+\caption{Descente de gradient}
+\label{alg:desc_grad}
+\begin{algorithmic}
+\Repeat
+	\State \(\boldsymbol{x} \gets \boldsymbol{x} - \eta \cdot \boldsymbol{\nabla} \kappa\)
+\Until{\(\norm{\boldsymbol{\nabla} \kappa} \leq \varepsilon\)}
+\end{algorithmic}
+\end{algorithm}
+où : \(\eta\) est un facteur appelé \emph{taux d'apprentissage}. On parle d'\emph{hyperparamètre} dans ce cas, car il n'est pas mis à jour durant l'apprentissage mais durant une phase ultérieure\footnote{En réalité, il peut être modifié durant l'apprentissage, selon certaines règles plus ou moins complexes. Nous en traitons dans la section "Validation et ajustement d'hyperparamètres".}.
 
+En une dimension, cela pourrait se représenter comme suit : 
+
+[SCHEMA]
+
+Avec deux paramètres, on pourrait l'imaginer comme ceci : 
+
+[SCHEMA]
 
 [COMPLETER]
-
-L'algorithme de est le suivant :
-
-
-
 
 [COMPLETER : SGD et pourquoi]
 
 \subsection{Rétropropagation de gradient}
-
 La \emph{rétropropagation de gradient}, (\emph{gradient backpropagation} en anglais) redonna un souffle de vie aux réseaux de neurones, lesquels résistaient à toutes les tentatives pour les entraîner convenablement. Son principe est très simple, même si la mise en oeuvre requiert un peu de réflexion.
 
 L'idée est la suivante : dans un réseau de neurones, chaque neurone prend en entrée la sortie d'autres multiples neurones, donc sa propre sortie en dépend. Ainsi, toute erreur de sortie du réseau est imputable non seulement à la couche de sortie mais à tous les neurones du réseau. Cependant, la responsabilité dans cette erreur n'est pas équitablement partagée. Ilfaut alors déterminer assez précisément la contribution de chaque neurone à la réponse obtenue en sortie, et propager le résultat vers l'"arrière", à travers les couches de neurones, c'est-à-dire vers la couche d'entrée. 
 
+Il est donc clair que la sortie \(o\) d'un neurone est fonction implicite des nombreux paramètres précédents. Donc La variation de l'entrée par rapport à l'un de ces paramètres \(w\) se calcule comme suit : 
+
+\begin{equation}\label{eq:deriv_compos}
+\frac{\partial o}{\partial w} = \frac{\partial o}{\partial \alpha} \frac{\partial \alpha}{\partial w}
+\end{equation}
+où \(\alpha\) est un autre paramètre quelconque dont dépend \(o\).
+
+L'intérêt de l'expliciter, et notamment en insérant tous les paramètres intermédiaires, est que les calculs sont alors immédiats : la variation de la sortie de chaque neurone est directement calculée par rapport à la variation des paramètres de ce même neurone.
+
+Considérons deux neurones, à une seule entrée, le second étant connecté à la sortie du premier. La règle explicitée ci-dessus stipule que la variation de la sortie \(\hat{y} = o_2 = f(w_2 o_1 + b_2) = f(z_2)\) par rapport à celle du poids \(w_1\) vaut : 
+
+\begin{align*}
+\frac{\partial o_2}{\partial w_1} &= \frac{\partial o_2}{\partial z_2} \frac{\partial z_2}{\partial o_1} \frac{\partial o_1}{\partial z_1} \frac{\partial z_1}{\partial w_1}\\
+&= f'(z_2) \times 1 \times f'(z_1) \times 1\\
+&= f'(z_2) \times f'(z_1)
+\end{align*}
+
 [COMPLETER]
+
+Finalement, on peut considérer que "rétropropagation" est simplement un autre terme pour désigner la dérivée des fonctions composées.
 
 Enfin, la mise à jour des poids et biais des neurones se fait par une descente de gradient
 
@@ -68,12 +102,12 @@ Dans le cas où au moins une des valeurs n'est pas stabilisée, il "suffit" de r
 
 Pour la phase de tests, il est évident qu'on doit instaurer une métrique de performances du réseau de neurones. Cela n'était pas si flagrant pour la première phase. De manière assez étonnante, on peut utiliser plusieurs indicateurs, donc pas uniquemnt la fonction de coût, pour évaluer le réseau sur des données de test. En fait, il serait même assez mal venu de se contenter de la fonction de coût pour la phase de tests. Prenons l'exemple d'un réseau résolvant un problème de classification binaire, comme celui de savoir si un texte a été écrit par Balzac ou non. Alors, on aimerait connaître les taux suivants :
 
-\begin{itemize}
-\item[vrais positifs] Textes de Balzac reconnus comme tels.
-\item[vrais négatifs] Textes d'autres auteurs et catégorisés "autres"
-\item[faux positifs] Textes attribués à Balzac mais à tort
-\item[faux négatifs] Textes de Balzac non reconnus comme tels
-\end{itemize}
+\begin{description}
+\item[Vrais positifs] Textes de Balzac reconnus comme tels.
+\item[Vrais négatifs] Textes d'autres auteurs et catégorisés "autres"
+\item[Faux positifs] Textes attribués à Balzac mais à tort
+\item[Faux négatifs] Textes de Balzac non reconnus comme tels
+\end{description}
 
 
 
