@@ -47,7 +47,7 @@ L'algorithme, incroyablement simple, est le suivant :
 \Until{\(\norm{\boldsymbol{\nabla} \kappa} \leq \varepsilon\)}
 \end{algorithmic}
 \end{algorithm}
-où : \(\eta\) est un facteur appelé \emph{taux d'apprentissage}. On parle d'\emph{hyperparamètre} dans ce cas, car il n'est pas mis à jour durant l'apprentissage mais durant une phase ultérieure\footnote{En réalité, il peut être modifié durant l'apprentissage, selon certaines règles plus ou moins complexes. Nous en traitons dans la section "Validation et ajustement d'hyperparamètres".}.
+où : \(\eta\) est un facteur appelé \emph{taux d'apprentissage}. On parle d'\emph{hyperparamètre} dans ce cas, car il n'est pas mis à jour durant l'apprentissage mais durant une phase ultérieure\footnote{En réalité, il pourrait être modifié durant l'apprentissage, selon certaines règles plus ou moins complexes. Nous en traitons dans la section "Validation et ajustement d'hyperparamètres".}.
 
 En une dimension, cela pourrait se représenter comme suit : 
 
@@ -140,9 +140,9 @@ Autrement, on envisage aussi l'a version "avec inertie", dont l'objectif est de 
 \subsection{Fonction d'activation}
 Comme on a pu s'en apercevoir, les fonctions d'activation sont nombreuses et vairées. D'expérience, les chercheurs savent quelle fonction d'activation employer selon la place d'un neurone dans le réseau ou selon le type de problème résolu. Ainsi, la plupart du temps, les neurones de la couche de sortie peuvent avoir une fonction d'activation différente selon que le réseau réalise une classification ou une régression.
 
-Au début des neurones non linéaires, la fonction sigmoïde (sigma &: t \mapsto \frac{1}{1 + e^{-t}}) fut beaucoup utilisée. Cependant, ses propriétés ne sont pas restées intéressantes indéfiniment. On a donc cherché des fonctions non saturantes et plus faciles à entraîner, telles que \(\mathit{ReLU} &: t \mapsto max(0, t)\).
+Au début des neurones non linéaires, la fonction sigmoïde \(sigma : t \mapsto \frac{1}{1 + e^{-t}}\) fut beaucoup utilisée. Cependant, ses propriétés ne sont pas restées intéressantes indéfiniment. On a donc cherché des fonctions non saturantes et facilitant l'apprentissage, telles que \(\mathit{ReLU} : t \mapsto max(0, t)\).
 
-Assez vite, on a élaboré des variations d'après ReLU, comme "leaky ReLU" ou 
+Assez vite, on a élaboré des variations d'après ReLU, comme "leaky ReLU" ou "parametric ReLU" (\(\mathit{PReLU} : t \mapsto max(t, \alpha t)\)), où \(\alpha\) est, étrangement, un paramètre appris en même temps que tous les paramètres. Parfois, la frontière entre paramètre du modèle et paramètre de l'algorithme est brouillée. Il n'en demeure pas moins que la fonction d'activation est considérée comme un hyperparamètre.
 
 \subsection{Taille du réseau de neurones}
 La taille d'un réseau de neurones a un impact flagrant sur les performances de celui-ci, tant en terme de temps machine qu'en terme de précision dans ses prédictions. Un grand réseau peut à la fois être très lent à entraîner et sur-ajuster les données. D'une certaine manière, plus on a de neurones dans le réseau, plus on risque de mal apprendre, mais ne pas en avoir assez n'est pas idéal non plus; le nombre de paramètres du modèle est donc un hyperparamètre de l'algorithme.
@@ -154,6 +154,8 @@ Plus généralement, cette technique fait partie des méthodes de \emph{régular
 
 \section{Conclusion}
 
-Les réseaux de neurones sont de formidables machines à optimiser des fonctions. 
+Les réseaux de neurones sont de formidables machines à optimiser des fonctions. Mieux, ce sont des machines à approcher des fonctions, et leur structure hautement non linéaire permettent souvent d'y arriver.
+
+[FINIR]
 
 On pressent que l'entrée d'un réseau de neurones devra être numérique pour que les algorithmes impliqués dans l'apprentissage fonctionnent. Ceci aura un impact important dans toute application de ces réseaux à des problèmes réel et divers.
