@@ -5,6 +5,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[section]{placeins}
 \usepackage{letltxmacro}
 \LetLtxMacro{\oldemph}{\emph}
 \renewcommand{\emph}[1]{\textcolor{blue}{\textbf{\oldemph{#1}}}}
@@ -12,5 +14,6 @@
 \usepackage{mathtools}
 \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 \numberwithin{equation}{chapter}
+\usepackage{hyperref}
 \usepackage{algpseudocode}
 \usepackage[chapter]{algorithm}

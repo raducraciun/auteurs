@@ -17,10 +17,14 @@ ou encore
 \end{equation}
 en notation vectorielle, où : \(\boldsymbol{\alpha}\) est le vecteur des \(n + 1\) paramètres; \(\boldsymbol{x}\) est le vecteur des paramètres, de dimension \(n + 1\), dont le premier vaut 1;  \(\langle, \rangle\), représente le produit scalaire.
 
-Ainsi, avec un seul paramètre, par exemple la surface habitable, l'évolution du prix pourrait ressembler à ceci :
+Ainsi, avec un seul paramètre, par exemple la surface habitable, l'évolution du prix pourrait ressembler à la figure \ref{fig:reg_lin} où chaque point représente une maison dont on a mesuré la surface habitable et consulté le prix de vente.
 
-[FIGURE]
-où chaque point représente une maison dont on a mesuré la surface habitable et consulté le prix de vente.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{img/reg_lin.png}
+\caption{Régression linéaire sur la surface habitable}
+\label{fig:reg_lin}
+\end{figure}
 
 Ce modèle est souvent privilégié du fait de la simplicité de sa mise en œuvre. Bien sûr, on peut imaginer des modèles non linéaires, dans lesquels \(\hat y\) est une fonction non linéaire des \(x_i\). Quelle que soit la régression choisie, il existe une méthode suffisamment générale pour calculer une approximation des meilleurs paramètres du modèle, nous la verrons plus loin.
 
@@ -35,17 +39,26 @@ Contrairement à la régression, la \emph{classification} (\emph{clustering} en 
 
 Pour reprendre l'exemple précédent, il pourrait s'agir de prédire si la maison serait éligible au classement des monuments historiques. Dans le premier cas on parle de "classification binaire". Si plus de 3 valeurs sont possibles, on parle de "classification multiple" ou "multiclasses". Parfois, il arrive que des classes ne soient pas mutuellement exclusives, mais nous ne nous en préoccuperons pas ici.
 
-Les modèles de classification sont nombreux et très divers. Ceci est dû au fait que les problèmes auxquels répondent les algorithmes de classification sont eux-mêmes très divers. Pour les modèles, on citera donc pêle-mêle les arbres de décision (et leur amélioration que sont les forêts aléatoires), les \(k\)-plus proches voisins,  les \(k\)-moyennes, ou encore la classification hiérarchique. 
+Les modèles de classification sont nombreux et très divers. Ceci est dû au fait que les problèmes auxquels répondent les algorithmes de classification sont eux-mêmes très divers. Pour les modèles, on citera donc pêle-mêle les arbres de décision (et leur amélioration que sont les forêts aléatoires), les \(k\)-plus proches voisins,  les \(k\)-moyennes, ou encore la classification hiérarchique. Deux illustrations par la figure \ref{fig:clusterings}.
 
-[SCHEMA]
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/kmeans_voronoi.png}
+        \caption{Partitionnement par les \(k\)-moyennes}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/iris_dendrogram.png}
+        \caption{Classification ascendante hiérarchique}
+    \end{subfigure}
+    \caption{Différentes classifications}\label{fig:clusterings}
+\end{figure}
 
 Le choix entre ces modèles se fait souvent en fonction de la dimension du problème, mais aussi de la répartition des données dans l'espace des variables. Typiquement, si les données peuvent être séparées par une droite, un plan, ou un hyperplan, alors on se contentera d'un classifieur linéaire adapté à la dimension. Mais il arrive bien souvent que les données ne sont pas séparables linéairement, alors on doit pousser l'analyse plus loin, comme leur appliquer des transformations non linéaires ou les traiter avec des réseaux de neurones.
 
 
 \subsection*{Conclusion}
-Nous avons vu que l'apprentissage artificiel se réduisait à résoudre un problème de type régression, calcul d'une valeur continue, ou bien classification, calcul d'une valeur discrète.
-
-Il s'avère que certaines techniques de régression permettent aussi de faire de la classification, typiquement en calculant une probabilité qu'on arrondit ensuite au nombre entier le plus proche (0 ou 1). C'est le cas de la régression ridge par exemple. Nous n'en donnerons pas les détails ici.
+Nous avons vu que l'apprentissage artificiel se réduisait à résoudre un problème de type régression, calcul d'une valeur continue, ou bien classification, calcul d'une valeur discrète. Il s'avère que certaines techniques de régression permettent aussi de faire de la classification, typiquement en calculant une probabilité qu'on arrondit ensuite au nombre entier le plus proche (0 ou 1). C'est le cas de la régression ridge par exemple. Nous n'en donnerons pas les détails ici.
 
 Abordons maintenant une autre dichotomie classique du domaine de l'apprentissage.
 
@@ -68,60 +81,70 @@ Les sciences s'inspirent parfois de caractères trouvés dans la nature et essay
 
 Pour les neurones, l'histoire est sensiblement la même. Les neurones biologiques sont des cellules fonctionnant en réseau et dont un des rôles est de transmettre des impulsions électriques. L'interconnexion entre ces neurones se fait par voie chimique, et leur agencement change au cours de la vie.
 
-[COMPLETER]
-
 \subsection{Unité Linéaire à Seuil}
-L'Unité Linéaire à Seuil (ULS, ou Linear Threshold Unit, LTU en anglais) est un composant numérique qui à plusieurs entrées pondérées associe une sortie binaire. Après avoir calculé une combinaison linéaire des entrées, il applique une fonction seuil. Sa sortie vaut :
+L'Unité Linéaire à Seuil (ULS, ou Linear Threshold Unit, LTU en anglais) est un composant numérique qui à plusieurs entrées pondérées associe une sortie binaire.
 
-\[o = s(\langle \boldsymbol{w}, \boldsymbol{x} \rangle)\]
-où : \(s\) est la fonction seuil; \(\boldsymbol{w}\) est le vecteur des \(n\) poids associés aux entrées; \(\boldsymbol{x}\) est le vecteur des \(n\) entrées.
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{img/ltu.png}
+\caption{Unité Linéaire à Seuil}
+\label{fig:ltu}
+\end{figure}
 
-Un LTU a son utilité dans une classification binaire lorsqu'il est utilisé seul, ou dans une classification multiple lorsqu'il est combiné à d'autres LTU. Cependant, tel quel, il est incapable de séparer des points autrement que par une frontière linéaire. Par exemple, simplement pour mimer le comportement de la fonction OU EXCLUSIF, il faut ruser et combiner plusieurs LTU : 
+Après avoir calculé une combinaison linéaire des entrées, il applique une fonction seuil. Sa sortie vaut :
+\[o = \phi(\langle \boldsymbol{w}, \boldsymbol{x} \rangle)\]
+où : \(\phi\) est la fonction seuil; \(\boldsymbol{w}\) est le vecteur des \(n\) poids associés aux entrées; \(\boldsymbol{x}\) est le vecteur des \(n\) entrées.
 
-[SCHEMA]
+Un LTU a son utilité dans une classification binaire lorsqu'il est utilisé seul, ou dans une classification multiple lorsqu'il est combiné à d'autres LTU. Cependant, tel quel, il est incapable de séparer des points autrement que par une frontière linéaire. Par exemple, simplement pour mimer le comportement de la fonction OU EXCLUSIF (XOR), il faut plusieurs LTU pour séparer les points identiques.
 
-[DETAIL]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{img/xor.png}
+\caption{Fonction XOR\((x,y)\)}
+\label{fig:xor}
+\end{figure}
 
-L'apparente faiblesse des LTU face à un problème si simple a quelque peu déçu les chercheurs des années 50-60, qui ont alors pu abandonner le connexionisme. Mais nous verrons que les LTU seuls ou en réseau sont loin d'être inutiles. 
+Puisque les points de la fonction XOR ne sont pas linéairement séparables, il n'est pas étonnant qu'un seul LTU ne s'en sorte pas. Mais l'apparente faiblesse des LTU face à un problème si simple a quelque peu déçu les chercheurs des années 50-60, qui ont alors pu abandonner le connexionisme. Mais nous verrons que les LTU seuls ou en réseau sont loin d'être inutiles. 
 
 Voyons maintenant quelles modifications ont été apportées depuis.
 
 \subsection{Neurone non linéaire}
 Un désavantage majeur des LTU est que leur sortie, binaire, est calculée par une fonction seuil. Ceci mène à une frontière de séparation linéaire dans l'espace des variables d'entrée. Bien que la simplicité des modèles linéaires ait fait ses preuves par le passé, il est parfois nécessaire de complexifier. Ainsi, une modification envisagée fut de remplacer la fonction seuil par une des fonctions suivantes (ou par une des nombreuses autres existantes) : 
-
 \begin{align}
 \sigma &: t \mapsto \frac{1}{1 + e^{-t}}\\
 \tanh &: t \mapsto \frac{e^t - e^{-t}}{e^t + e^{-t}}\\
 \mathit{ReLU} &: t \mapsto max(0, t)
 \end{align}
 
-Voici les représentations graphiques des fonctions et de leurs dérivées autour de \((0, 0)\) : 
+Elles sont représentées graphiquement autour de \((0, 0)\) par la figure \ref{fig:activations}. 
 
-[FIGURE]
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{img/activations.png}
+\caption{Les fonctions d'activation citées}
+\label{fig:activations}
+\end{figure}
 
-Un autre ajout fut celui d'un terme constant, appelé \emph{biais}%\footnote{Ce biais n'a aucun lien avec la notion de biais associée à la sous-interprétation, laquelle est une notion statistique.} 
-avant la \emph{fonction d'activation}.
-
-Voici un schéma représentant ce nouveau type de neurone : 
-
-[SCHEMA]
-
-En conservant les mêmes notations que précédemment, l'équation en sortie du neurone est donc la suivante : 
-
+Un autre ajout fut celui d'un terme constant, appelé \emph{biais} avant la \emph{fonction d'activation}. En conservant les mêmes notations que précédemment, l'équation en sortie du neurone est donc la suivante : 
 \begin{equation}\label{eq:neurone}
-o = f(\langle \boldsymbol{w}, \boldsymbol{x} \rangle + b)
+o = \phi(\langle \boldsymbol{w}, \boldsymbol{x} \rangle + b)
 \end{equation}
 
 Le biais du neurone sert à activer celui-ci même lorsque le signal d'entrée est faible. Dans un réseau, cela aura pour effet de déclencher l'apprentissage chez au moins quelques neurones.
 
-L'intérêt des neurones non linéaires apparaît lorsqu'on les regroupe en réseaux.
+L'intérêt des neurones non linéaires apparaît vraiment lorsqu'on les regroupe en réseaux.
 
 \section{Réseaux de neurones}
 Voici un aperçu de ce à quoi un réseaux de neurones peut ressembler :
 
-[SCHEMA]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/reseau_neurones.png}
+\caption{Un exemple de réseau de neurones}
+\label{fig:ffnn}
+\end{figure}
 
-On y voit une couche d'entrée, des couches cachées et une couche de sortie. Mais, contrairement au neurone seul, on ne peut pas simplement expliciter la sortie du réseau en fonction des entrées. Nous expliquerons en détail aux chapitres suivants comment travailler avec de tels réseaux.
+On y voit une \emph{couche d'entrée} (\emph{input layer}), des \emph{couches cachées} (\emph{hidden layers}) et une \emph{couche de sortie} (\emph{output layer}). Mais, contrairement au neurone seul, on ne peut pas simplement expliciter la sortie du réseau en fonction des entrées. Nous expliquerons en détail aux chapitres suivants comment travailler avec de tels réseaux.
 
 
 \section{Dilemme biais - variance, ajustement}
@@ -129,7 +152,7 @@ Imaginons la situation suivante: deux amis, Béatrice et Valentin, se baladent e
 
 Malheureusement, l'histoire ne dit précise pas la suite des évènements, on peut malgré tout en tirer des leçons. Le raisonnement de Valentin souffre d'un défaut relativement facile à déceler, appelé \emph{sur-ajustement} (on parle aussi de \emph{sur-interprétation} ou de \emph{sur-apprentissage}, \emph{overfitting} en anglais), qui survient lorsqu'on cherche à généraliser des données mais à partir d'un modèle qui les ajuste parfaitement. En résumé, Valentin a tendance à trop "coller" aux données, en leur faisant aveuglément confiance. Dans ce cas précis, on pressent qu'il tend à surajuster car, sous l'hypothèse que la pièce est équilibrée, 8 tirages identiques d'affilée surviennent tous les 256 lancer environ. Ainsi, Valentin n'a pas suffisamment de données pour écarter si drastiquement le modèle de Béatrice. En revanche, si nos deux amis avaient été témoins de plus de lancers identiques, disons 50, il aurait été bien plus légitime de conclure que le modèle d'équiprobabilité est faux.
 
-Malgré tout, son amie n'a pas tout à fait raison non plus. L'approche de Béatrice se fonde sur un modèle très simplifié de la réalité, et les prémisses de celui-ci peuvent être fausses. Dans le cas d'une pièce de monnaie, il est possible de s'entraîner à la lancer et la rattraper de sorte à en contrôler l'issue avec une forte probabilité. Des études spécifiques on été menées sur des pièces de 1 euro et 2 euros, concluant qu'elles n'étaient pas équilibrées\footnote{vidéo}. Dans le cas de Béatrice, lorsqu'on fait trop confiance à un modèle et pas assez aux données, on parle de \emph{sous-ajustement} (\emph{sous-apprentissage}, ou encore de \emph{sous-interprétation} , \emph{underfitting} en anglais).
+Malgré tout, son amie n'a pas tout à fait raison non plus. L'approche de Béatrice se fonde sur un modèle très simplifié de la réalité, et les prémisses de celui-ci peuvent être fausses. Dans le cas d'une pièce de monnaie, il est possible de s'entraîner à la lancer et la rattraper de sorte à en contrôler l'issue avec une forte probabilité. Des études spécifiques on été menées sur des pièces de 1 euro et 2 euros, concluant qu'elles n'étaient pas équilibrées\footnote{\url{https://www.youtube.com/watch?v=AYnJv68T3MM}}. Dans le cas de Béatrice, lorsqu'on fait trop confiance à un modèle et pas assez aux données, on parle de \emph{sous-ajustement} (\emph{sous-apprentissage}, ou encore de \emph{sous-interprétation} , \emph{underfitting} en anglais).
 
 Cet exemple élémentaire sert à illustrer un problème central de l'apprentissage artificiel: le dilemme entre diminuer le biais\footnote{Ce biais, notion statistique, n'a rien à voir avec celui des neurones artificiels.} et diminuer la variance. Un résultat important en statistiques et apprentissage artificiel est que l'erreur de généralisation d'un modèle  possède trois sources d'erreur différentes : 
 \begin{description}

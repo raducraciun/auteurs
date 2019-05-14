@@ -1,0 +1,30 @@
+\BOOKMARK [0][-]{chapter.1}{Panorama de l'apprentissage artificiel}{}% 1
+\BOOKMARK [1][-]{section.1.1}{R\351gression versus classification}{chapter.1}% 2
+\BOOKMARK [2][-]{subsection.1.1.1}{R\351gression}{section.1.1}% 3
+\BOOKMARK [2][-]{subsection.1.1.2}{Classification}{section.1.1}% 4
+\BOOKMARK [1][-]{section.1.2}{Apprentissage supervis\351 versus non supervis\351}{chapter.1}% 5
+\BOOKMARK [2][-]{subsection.1.2.1}{Supervis\351}{section.1.2}% 6
+\BOOKMARK [2][-]{subsection.1.2.2}{Non supervis\351}{section.1.2}% 7
+\BOOKMARK [1][-]{section.1.3}{Notion de neurone artificiel}{chapter.1}% 8
+\BOOKMARK [2][-]{subsection.1.3.1}{Unit\351 Lin\351aire \340 Seuil}{section.1.3}% 9
+\BOOKMARK [2][-]{subsection.1.3.2}{Neurone non lin\351aire}{section.1.3}% 10
+\BOOKMARK [1][-]{section.1.4}{R\351seaux de neurones}{chapter.1}% 11
+\BOOKMARK [1][-]{section.1.5}{Dilemme biais - variance, ajustement}{chapter.1}% 12
+\BOOKMARK [1][-]{section.1.6}{Protocole pour un probl\350me d'apprentissage}{chapter.1}% 13
+\BOOKMARK [1][-]{section.1.7}{Conclusion}{chapter.1}% 14
+\BOOKMARK [0][-]{chapter.2}{Entra\356nement et \351valuation d'un r\351seau de neurones}{}% 15
+\BOOKMARK [1][-]{section.2.1}{Entra\356nement}{chapter.2}% 16
+\BOOKMARK [2][-]{subsection.2.1.1}{Fonction objectif}{section.2.1}% 17
+\BOOKMARK [2][-]{subsection.2.1.2}{Descente de gradient}{section.2.1}% 18
+\BOOKMARK [2][-]{subsection.2.1.3}{R\351tropropagation de gradient}{section.2.1}% 19
+\BOOKMARK [1][-]{section.2.2}{Tests}{chapter.2}% 20
+\BOOKMARK [1][-]{section.2.3}{Validation et ajustement d'hyperparam\350tres}{chapter.2}% 21
+\BOOKMARK [2][-]{subsection.2.3.1}{Taux d'apprentissage}{section.2.3}% 22
+\BOOKMARK [2][-]{subsection.2.3.2}{Fonction d'activation}{section.2.3}% 23
+\BOOKMARK [2][-]{subsection.2.3.3}{Taille du r\351seau de neurones}{section.2.3}% 24
+\BOOKMARK [0][-]{chapter.3}{Traitement du Langage Naturel}{}% 25
+\BOOKMARK [1][-]{section.3.1}{Les donn\351es}{chapter.3}% 26
+\BOOKMARK [1][-]{section.3.2}{Classification de textes}{chapter.3}% 27
+\BOOKMARK [2][-]{subsection.3.2.1}{Classification binaire : Balzac ou bien Zola ?}{section.3.2}% 28
+\BOOKMARK [2][-]{subsection.3.2.2}{Classification multiple : quel auteur ?}{section.3.2}% 29
+\BOOKMARK [1][-]{section.3.3}{G\351n\351ration de texte}{chapter.3}% 30

@@ -1,0 +1,114 @@
+---
+title: "Courbes"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+```
+
+
+```{r}
+id_fig = 0
+```
+
+
+# Panorama
+
+```{r}
+prix = tibble(surface = seq(from = 50, to = 150, length.out = 15), prix = seq(from = 100, to = 1000, length.out = 15))
+```
+
+```{r}
+prix %>%
+  ggplot(mapping = aes(x = surface, y = prix)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Prix des maisons en fonction de leur surface", x = "Surface (m²)", y = "Prix (10³ €)")
+
+ggsave(filename = paste("figure_", id_fig, ".png", sep = ""), width = 15, height = 8)
+id_fig = id_fig + 1
+```
+
+
+```{r}
+ggplot(data.frame(x = c(-2, 2)), aes(x)) +
+  stat_function(fun = function(x) {return (1/(1 + exp(-x)))}, color = "red") +
+  stat_function(fun = tanh, color = "blue") +
+  stat_function(fun = function(x) sapply(x, function(z) max(0,z)), color = "green")
+```
+
+```{r}
+relu <- function(x) sapply(x, function(z) max(0,z))
+sigmoide <- function(x) (1/(1 + exp(-x)))
+
+x <- seq(from = -3, to = 3, by = 0.1)
+
+fits <- data.frame(x=x, sigmoide = sigmoide(x), tanh = tanh(x), relu = relu(x))
+long <- melt(fits, id.vars="x")
+
+ggplot(data=long, aes(x=x, y=value, group=variable, colour=variable))+
+  geom_line(size=1) +
+  labs(title = "Fonctions d'activation courantes", color = "Fonction", x = "<w, x>", y = "o")
+
+ggsave(filename = paste("figure_", id_fig, ".png", sep = ""), width = 15, height = 8)
+id_fig = id_fig + 1
+```
+
+```{r}
+# drelu <- function(x) sapply(x, function(z) as.numeric(z > 0))
+# dtanh <- function(x) 1 - (tanh(x))^2
+# 
+# fits <- data.frame(x=x, sigmoide = sigmoide(x), tanh = tanh(x), relu = relu(x))
+# long <- melt(fits, id.vars="x")
+# 
+# ggplot(data=long, aes(x=x, y=value, group=variable, colour=variable))+
+#   geom_line(size=1) +
+#   labs(title = "Fonctions d'activation courantes", color = "Fonction", y = "")
+# 
+# ggsave(filename = paste("figure_", id_fig, ".png", sep = ""), width = 15, height = 8)
+# id_fig = id_fig + 1
+```
+
+
+# Classification
+
+```{r}
+class_bin = read.csv(file = "auteurs_class_bin_perf.csv", header = TRUE, sep = ";")
+```
+
+
+```{r}
+class_bin %>% filter(perte < 0.1) %>%
+	ggplot() +
+	geom_line(mapping = aes(x = epoque, y = perte, color = "red")) +
+	geom_line(mapping = aes(x = epoque, y = test_perte, color = "blue"))  +
+	labs(title = "Courbes d'apprentissage pour la classification binaire", x = "Epoques", y = "Perte", color = "Jeu de données") +
+	scale_color_hue(labels = c("test", "entraînement"))
+
+ggsave(filename = paste("figure_", id_fig, ".png", sep = ""), width = 15, height = 8)
+id_fig = id_fig + 1
+```
+
+
+
+```{r}
+class_mult = read.csv(file = "auteurs_class_mult_perf.csv", header = TRUE, sep = ";")
+```
+
+```{r}
+class_mult %>%
+	ggplot() +
+	geom_line(mapping = aes(x = epoque, y = cout, color = "red")) +
+	geom_line(mapping = aes(x = epoque, y = test_cout, color = "blue"))  +
+	labs(title = "Courbes d'apprentissage pour la classification multiple", x = "Epoques", y = "Perte", color = "Jeu de données") +
+	scale_color_hue(labels = c("test", "entraînement"))
+
+ggsave(filename = paste("figure_", id_fig, ".png", sep = ""), width = 15, height = 8)
+id_fig = id_fig + 1
+```
+

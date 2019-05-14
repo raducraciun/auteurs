@@ -1,30 +1,31 @@
 \babel@toc {french}{}
-\contentsline {chapter}{\numberline {1}Panorama de l'apprentissage artificiel}{7}
-\contentsline {section}{\numberline {1.1}R\IeC {\'e}gression \textit {versus} classification}{7}
-\contentsline {subsection}{\numberline {1.1.1}R\IeC {\'e}gression}{7}
-\contentsline {subsection}{\numberline {1.1.2}Classification}{8}
-\contentsline {section}{\numberline {1.2}Apprentissage supervis\IeC {\'e} \textit {versus} non supervis\IeC {\'e}}{8}
-\contentsline {subsection}{\numberline {1.2.1}Supervis\IeC {\'e}}{8}
-\contentsline {subsection}{\numberline {1.2.2}Non supervis\IeC {\'e}}{9}
-\contentsline {section}{\numberline {1.3}Notion de neurone artificiel}{9}
-\contentsline {subsection}{\numberline {1.3.1}Unit\IeC {\'e} Lin\IeC {\'e}aire \IeC {\`a} Seuil}{9}
-\contentsline {subsection}{\numberline {1.3.2}Neurone non lin\IeC {\'e}aire}{10}
-\contentsline {section}{\numberline {1.4}R\IeC {\'e}seaux de neurones}{10}
-\contentsline {section}{\numberline {1.5}Dilemme biais - variance, ajustement}{10}
-\contentsline {section}{\numberline {1.6}Protocole pour un probl\IeC {\`e}me d'apprentissage}{11}
-\contentsline {section}{\numberline {1.7}Conclusion}{12}
-\contentsline {chapter}{\numberline {2}Entra\IeC {\^\i }nement et \IeC {\'e}valuation d'un r\IeC {\'e}seau de neurones}{13}
-\contentsline {section}{\numberline {2.1}Entra\IeC {\^\i }nement}{13}
-\contentsline {subsection}{\numberline {2.1.1}Fonction objectif}{13}
-\contentsline {subsection}{\numberline {2.1.2}Descente de gradient}{14}
-\contentsline {subsection}{\numberline {2.1.3}R\IeC {\'e}tropropagation de gradient}{14}
-\contentsline {section}{\numberline {2.2}Tests}{15}
-\contentsline {section}{\numberline {2.3}Validation et ajustement d'hyperparam\IeC {\`e}tres}{16}
-\contentsline {subsection}{\numberline {2.3.1}Taux d'apprentissage}{16}
-\contentsline {subsection}{\numberline {2.3.2}Fonction d'activation}{17}
-\contentsline {subsection}{\numberline {2.3.3}Taille du r\IeC {\'e}seau de neurones}{17}
-\contentsline {section}{\numberline {2.4}Conclusion}{17}
-\contentsline {chapter}{\numberline {3}Traitement du Langage Naturel}{19}
-\contentsline {section}{\numberline {3.1}Les donn\IeC {\'e}es}{19}
-\contentsline {section}{\numberline {3.2}Classification de textes}{20}
-\contentsline {section}{\numberline {3.3}G\IeC {\'e}n\IeC {\'e}ration de texte}{20}
+\contentsline {chapter}{\numberline {1}Panorama de l'apprentissage artificiel}{7}{chapter.1}
+\contentsline {section}{\numberline {1.1}R\IeC {\'e}gression \textit {versus} classification}{7}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}R\IeC {\'e}gression}{7}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Classification}{8}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}Apprentissage supervis\IeC {\'e} \textit {versus} non supervis\IeC {\'e}}{9}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Supervis\IeC {\'e}}{9}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Non supervis\IeC {\'e}}{10}{subsection.1.2.2}
+\contentsline {section}{\numberline {1.3}Notion de neurone artificiel}{10}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Unit\IeC {\'e} Lin\IeC {\'e}aire \IeC {\`a} Seuil}{10}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Neurone non lin\IeC {\'e}aire}{11}{subsection.1.3.2}
+\contentsline {section}{\numberline {1.4}R\IeC {\'e}seaux de neurones}{12}{section.1.4}
+\contentsline {section}{\numberline {1.5}Dilemme biais - variance, ajustement}{13}{section.1.5}
+\contentsline {section}{\numberline {1.6}Protocole pour un probl\IeC {\`e}me d'apprentissage}{14}{section.1.6}
+\contentsline {section}{\numberline {1.7}Conclusion}{14}{section.1.7}
+\contentsline {chapter}{\numberline {2}Entra\IeC {\^\i }nement et \IeC {\'e}valuation d'un r\IeC {\'e}seau de neurones}{15}{chapter.2}
+\contentsline {section}{\numberline {2.1}Entra\IeC {\^\i }nement}{15}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Fonction objectif}{15}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Descente de gradient}{16}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}R\IeC {\'e}tropropagation de gradient}{17}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}Tests}{18}{section.2.2}
+\contentsline {section}{\numberline {2.3}Validation et ajustement d'hyperparam\IeC {\`e}tres}{19}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Taux d'apprentissage}{19}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Fonction d'activation}{20}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Taille du r\IeC {\'e}seau de neurones}{20}{subsection.2.3.3}
+\contentsline {chapter}{\numberline {3}Traitement du Langage Naturel}{23}{chapter.3}
+\contentsline {section}{\numberline {3.1}Les donn\IeC {\'e}es}{23}{section.3.1}
+\contentsline {section}{\numberline {3.2}Classification de textes}{24}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Classification binaire : Balzac ou bien Zola ?}{24}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Classification multiple : quel auteur ?}{26}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}G\IeC {\'e}n\IeC {\'e}ration de texte}{28}{section.3.3}

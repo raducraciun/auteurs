@@ -12,7 +12,7 @@ Une manière classique de suivre l'évolution du système qui apprend est de cal
 \kappa &= \frac{1}{m}\sum_{i = 1}^m (y_i - \hat{y}_i)^2\\
 \kappa &= - \frac{1}{m}\sum_{i = 1}^m y_i \ln{\hat{y}_i} + (1 - y_i)\ln{(1 - \hat{y}_i)}
 \end{align}
-où : \(m\) est le nombre d'observations ; les \(y_i\) sont les réponses attendues et \(\hat{y}_i\) sont les réponses inférées par le réseau.
+où : \(m\) est le nombre d'observations ; les \(y_i\) sont les réponses attendues et \(\hat{y}_i\) sont les réponses inférées par le réseau. La première fonction est appelée "erreur quadratique moyenne", la seconde "entropie croisée".
 
 Maximiser la performance du réseau est équivalent à minimiser la fonction de coût, mais le formuler ainsi permet de profiter des techniques d'optimisation déjà existantes. On en traite dans la section suivante.
 
@@ -22,14 +22,10 @@ La dépendance entre la fonction de coût et les réponses \(y_i\) et \(\hat{y}_
 où les variables sont les regroupements des poids (respectivement des biais, entrées et réponses attendues) sous forme de vecteurs.
 Cette représentation est utile pour l'algorithme qui suit.
 
-[CORRIGER]
-
-[FINIR]
-
 \subsection{Descente de gradient}\label{subseq:desc_grad}
 La \emph{descente de gradient} est une méthode d'optimisation très générale. Elle permet de minimiser une fonction, donc de maximiser son opposé, par étapes successives. Un point caractéristique de la méthode est qu'elle ne garantit, à condition que la fonction soit bien choisie, que la découverte d'un extremum local. De manière générale, la découverte du extremum global d'une fonction continue, s'il existe, est un problème difficile.
 
-Bien évidemment, puisqu'il s'agit de minimiser la fonction de coût, ses propriétés vont grandement influer sur le déroulement de l'algorithme. Le cas le plus intéressant est celui d'une fonction convexe [DEFINIR], ce qui nous assurerait que la fonction possède au plus un minimum. Si ce n'était pas le cas, la descente de gradient pourrait s'arrêter dans un minimum local loin de l'optimum global. Mais il n'est pas toujours évident de garantir cette propriété, encore moins en dimension 2 ou supérieure.
+Bien évidemment, puisqu'il s'agit de minimiser la fonction de coût, ses propriétés vont grandement influer sur le déroulement de l'algorithme. Le cas le plus intéressant est celui d'une fonction convexe, ce qui nous assurerait que la fonction possède au plus un minimum. Si ce n'était pas le cas, la descente de gradient pourrait s'arrêter dans un minimum local loin de l'optimum global. Mais il n'est pas toujours évident de garantir cette propriété, encore moins en dimension 2 ou supérieure.
 
 L'idée de l'algorithme de la descente de gradient est qu'à chaque itération on ajuste les paramètres de la fonction de coût, de sorte que les nouvelles valeurs renvoient une sortie plus faible qu'à l'itération précédente. On choisit de s'arrêter lorsque les variations inter-étapes sont plus faibles qu'un seuil choisi, ou lorsqu'on a effectué un certain nombre d'itérations. 
 
@@ -49,17 +45,15 @@ L'algorithme, incroyablement simple, est le suivant :
 \end{algorithm}
 où : \(\eta\) est un facteur appelé \emph{taux d'apprentissage}. On parle d'\emph{hyperparamètre} dans ce cas, car il n'est pas mis à jour durant l'apprentissage mais durant une phase ultérieure\footnote{En réalité, il pourrait être modifié durant l'apprentissage, selon certaines règles plus ou moins complexes. Nous en traitons dans la section "Validation et ajustement d'hyperparamètres".}.
 
-En une dimension, cela pourrait se représenter comme suit : 
+Avec deux paramètres, on pourrait l'imaginer comme illustré par la figure \ref{fig:grad_desc}. 
 
-[SCHEMA]
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{img/grad_desc.png}
+\caption{Descentes de gradient avec deux initialisations différentes}
+\label{fig:grad_desc}
+\end{figure}
 
-Avec deux paramètres, on pourrait l'imaginer comme ceci : 
-
-[SCHEMA]
-
-[COMPLETER]
-
-[COMPLETER : SGD et pourquoi]
 
 \subsection{Rétropropagation de gradient}
 La \emph{rétropropagation de gradient}, (\emph{gradient backpropagation} en anglais) redonna un souffle de vie aux réseaux de neurones, lesquels résistaient à toutes les tentatives pour les entraîner convenablement. Son principe est très simple, même si la mise en œuvre requiert un peu de réflexion.
@@ -75,18 +69,18 @@ où \(\alpha\) est un autre paramètre quelconque dont dépend \(o\).
 
 L'intérêt de l'expliciter, et notamment en insérant tous les paramètres intermédiaires, est que les calculs sont alors immédiats : la variation de la sortie de chaque neurone est directement calculée par rapport à la variation des paramètres de ce même neurone.
 
-Considérons deux neurones, à une seule entrée, le second étant connecté à la sortie du premier. La règle explicitée ci-dessus stipule que la variation de la sortie \(\hat{y} = o_2 = f(w_2 o_1 + b_2) = f(z_2)\) (on rappelle que \(f\) est la fonction d'activation du neurone) par rapport à celle du poids \(w_1\) vaut : 
+Considérons deux neurones, à une seule entrée, le second étant connecté à la sortie du premier. La règle explicitée ci-dessus stipule que la variation de la sortie \(\hat{y} = o_2 = f(w_2 o_1 + b_2) = \phi(z_2)\) (on rappelle que \(\phi\) est la fonction d'activation du neurone) par rapport à celle du poids \(w_1\) vaut : 
 
 \begin{align*}
 \frac{\partial o_2}{\partial w_1} &= \frac{\partial o_2}{\partial z_2} \frac{\partial z_2}{\partial o_1} \frac{\partial o_1}{\partial z_1} \frac{\partial z_1}{\partial w_1}\\
-&= f'(z_2) \times w_2 \times f'(z_1) \times x_1
+&= \phi'(z_2) \times w_2 \times \phi'(z_1) \times x_1
 \end{align*}
 
 De même, la variation de la sortie par rapport au biais du premier neurone vaut : 
 
 \begin{align*}
 \frac{\partial o_2}{\partial b_1} &= \frac{\partial o_2}{\partial z_2} \frac{\partial z_2}{\partial _1} \frac{\partial o_1}{\partial z_1} \frac{\partial z_1}{\partial w_1}\\
-&= f'(z_2) \times w_2 \times f'(z_1)\\
+&= \phi'(z_2) \times w_2 \times \phi'(z_1)\\
 \end{align*}
 
 Finalement, on pourrait presque considérer que "rétropropagation" est simplement un autre terme pour désigner la dérivée des fonctions composées. Mais généralement, on considère que cela désigne le processus suivant, pour chaque observation d'un jeu de données :
@@ -101,12 +95,17 @@ Une variante appliquée en pratique calcule d'abord les erreurs pour tous les é
 
 
 \section{Tests}
-La phase de tests est celle durant laquelle on effectue le moins de changements sur les paramètres du modèle ou les hyperparamètres. Toutefois, elle est cruciale pour déceler les défauts d'ajustement, à savoir le sous-apprentissage et le sur-apprentissage. Pour ce faire, on étudie les \emph{courbes d'apprentissage}, qui sont la représentation graphique de la fonction de coût sur les données d'entraînement et les données de test. Voici un exemple fictif de ces courbes : 
+La phase de tests est celle durant laquelle on effectue le moins de changements sur les paramètres du modèle ou les hyperparamètres. Toutefois, elle est cruciale pour déceler les défauts d'ajustement, à savoir le sous-apprentissage et le sur-apprentissage. Pour ce faire, on étudie les \emph{courbes d'apprentissage}, qui sont la représentation graphique de la fonction de coût sur les données d'entraînement et les données de test. Un exemple fictif de ces courbes est donnée par la figure \ref{fig:courbes_apprent}. 
 
-[SCHEMA]
+\begin{figure}[H]
+\centering
+\includegraphics[width=.5\textwidth]{img/courbes_apprent.png}
+\caption{Courbes d'apprentissage}
+\label{fig:courbes_apprent}
+\end{figure}
 
 L'interprétation est parfois subtile mais se fait généralement comme suit. Supposons qu'à la fin de chaque phase, les deux valeurs se soient stabilisées. Si les valeurs sont toutes les deux "hautes", on est confronté à du sous-apprentissage : le modèle est peu adapté dans tous les cas. Si les deux valeurs sont "éloignées" l'une de l'autre, c'est un signe de sur-apprentissage : le modèle fait bien sur les données d'entraînement mais généralise mal.
-Dans le cas où au moins une des valeurs n'est pas stabilisée, il "suffit" de rajouter des observations.
+Dans le cas où au moins une des valeurs n'est pas stabilisée : si elle fluctue avec une tendance à la baisse, il suffit de rajouter des observations. Si sa valeur augmente à nouveau, on risque le sur-apprentisage; il faut revoir le modèle.
 
 Pour la phase de tests, il est évident qu'on doit instaurer une métrique de performances du réseau de neurones, alors que cela n'était pas si flagrant pour la première phase. De manière assez étonnante, on peut utiliser plusieurs indicateurs, donc pas uniquement la fonction de coût, pour évaluer le réseau sur des données de test. En fait, il serait même assez mal venu de se contenter de la fonction de coût pour la phase de tests. Prenons l'exemple d'un réseau résolvant un problème de classification binaire, comme celui de savoir si un texte a été écrit par Balzac ou non. Alors, on aimerait connaître les taux suivants :
 
@@ -129,9 +128,14 @@ Bien sûr, même si on a la possibilité de changer les valeurs des hyperparamè
 Voici quelques exemples d'hyperparamètres que l'on change en espérant améliorer les résultats de l'algorithme.
 
 \subsection{Taux d'apprentissage}
-Comme on l'a vu, le taux d'apprentissage \(\eta\) sert à contrôler le pas de descente de gradient. Or, en le gardant constant, on risque fort de manquer le minimum (local ou global) de la fonction de coût. S'il est trop faible, l'apprentissage est trop long, et la descente de gradient pourrait s'arrêter prématurément. En revanche, s'il est trop élevé, la descente de gradient pourrait diverger ! En voici deux illustrations
+Comme on l'a vu, le taux d'apprentissage \(\eta\) sert à contrôler le pas de descente de gradient. Or, en le gardant constant, on risque fort de manquer le minimum (local ou global) de la fonction de coût. S'il est trop faible, l'apprentissage est trop long, et la descente de gradient pourrait s'arrêter prématurément. En revanche, s'il est trop élevé, la descente de gradient pourrait diverger ! En voici plusieurs illustrations (figure \ref{fig:taux_apprent}).
 
-[SCHEMAS]
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{img/taux_apprent.png}
+\caption{Influence du taux d'apprentissage sur la fonction de coût}
+\label{fig:taux_apprent}
+\end{figure}
 
 Pour remédier à cela, on dispose de plusieurs solutions. La plus facile conceptuellement consiste à diminuer le taux d'apprentissage au fur et à mesure des itérations. Dans ce cas, les premières itérations provoqueront de grands changements dans les paramètres, mais les dernières ne feront que peaufiner ces changements.
 
@@ -150,12 +154,3 @@ La taille d'un réseau de neurones a un impact flagrant sur les performances de 
 De manière assez remarquable, il existe un compromis entre mettre en place un gros réseau et un réseau plus modeste : il s'agit du \emph{décrochage} (\emph{dropout} en anglais). Il s'agit simplement, pendant l'apprentissage, de virtuellement considérer comme absents certains neurones du réseau.
 
 Plus généralement, cette technique fait partie des méthodes de \emph{régularisation}, dont le but est de pénaliser les modèles complexes au profit des plus simples. Cela peut se traduire par exemple en ajoutant une valeur maximale aux paramètres du modèle. Encore une fois, l'idée est de réduire du mieux possible le sur-ajustement
-
-
-\section{Conclusion}
-
-Les réseaux de neurones sont de formidables machines à optimiser des fonctions. Mieux, ce sont des machines à approcher des fonctions, et leur structure hautement non linéaire permettent souvent d'y arriver.
-
-[FINIR]
-
-On pressent que l'entrée d'un réseau de neurones devra être numérique pour que les algorithmes impliqués dans l'apprentissage fonctionnent. Ceci aura un impact important dans toute application de ces réseaux à des problèmes réel et divers.
